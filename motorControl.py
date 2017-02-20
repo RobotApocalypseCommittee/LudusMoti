@@ -14,7 +14,7 @@ class MotorController:
     def motor_update(self):
         self.rrb.set_motors(self.motors[0][1], self.motors[0][0], self.motors[1][1], self.motors[1][0])
 
-    def set_motor(motor_no, direction, speed):
+    def set_motor(self, motor_no, direction, speed):
         if motor_no in [0,1]:
             self.motors[motor_no] = (direction, speed)
         self.motor_update()
