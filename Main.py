@@ -1,4 +1,6 @@
 import pygame
+import motorControl
+import RPi.GPIO as GPIO
 
 pygame.init()
 
@@ -9,6 +11,14 @@ clock = pygame.time.Clock()
 pygame.joystick.init()
 
 joystick_count = pygame.joystick.get_count()
+
+motorControl = motorControl.MotorController()
+
+GPIO.setmode(GPIO.BCM)
+
+chanList = [21, 26]
+
+GPIO.setup(chanList, GPIO.OUT)
 
 def getJoyValue(i, invert):
     val = joystick.get_axis(i)
@@ -25,48 +35,54 @@ def mapToValue(x, a, b, i, j):
 	    return x/float(b-a)*float(j-i)
 	    
 def convertToMotorSpeed(x, y):
+    if y < 0:
+        d = 0
+    elif y >= 0:
+        d = 1
+        
     if y > 0:
-        
+
         if x > 0:
             a = y
-            b = y + x
-            
+            b = y+x
+
         elif x < 0:
-            a = y + x
+            a = y+x*-1
             b = y
-            
+
         else:
             a = y
             b = y
-            
+
     elif y < 0:
-        
-        if x > 0:
-            a = y
-            b = y - x
-            
-        elif x < 0:
-            a = y - x
-            b = y
-            
-        else:
-            a = y
-            b = y
-            
+
+         if x > 0:
+             a = y*-1
+             b = (y-x)*-1
+
+         elif x < 0:
+             a = (y-x*-1)*-1
+             b = y*-1
+
+         else:
+             a = y*-1
+             b = y*-1
+
     elif y == 0:
         a = 0
         b = 0
 
     a = mapToValue(round(a, 2), -2, 2, -1, 1)
     b = mapToValue(round(b, 2), -2, 2, -1, 1)
-
-    return a, b
+    
+    return a, b, d
         
 
 for i in range(joystick_count):
         joystick = pygame.joystick.Joystick(i)
         joystick.init()
 
+leftState = 0
  
 while done == False:
     try:
@@ -87,18 +103,35 @@ while done == False:
 
             val = convertToMotorSpeed(x, y)
 
-            print val
+            ledleft = joystick.get_button( 4 )
+            ledright = joystick.get_button( 5 )
             
-            '''
-            counter = 0
+            ledall = joystick.get_button( 0 )
+
+            if ledall:
+                ledleft = 1
+                ledright = 1
+            
+            motorControl.set_led(0, ledleft)
+            motorControl.set_led(1, ledright)
+
+            print ledleft
+            GPIO.output(21, ledleft)
+
+            GPIO.output(26, ledright)
+            
+            #GPIO.output(14, ledright)
+
+
             for i in range(2):
-               print getJoyValue(i, counter)
-               counter += 1
-            '''
-        clock.tick(20)
+                motorControl.set_motor(i, val[2], val[i])
+
+            
+        clock.tick(100)
         
     except KeyboardInterrupt:
         pygame.quit()
         break
 
+GPIO.cleanup()
 pygame.quit()
