@@ -13,9 +13,10 @@ ledleft = True
 ledright = False
 
 #Output to (pin, state)
-GPIO.output(21, ledleft)
+GPIO.output(21, T)
 
 GPIO.output(26, ledright)
 
-#Reset all the pins after use
-GPIO.cleanup()
+def setLed(whichLed, state):
+    GPIO.output(whichLed, state)
+    
