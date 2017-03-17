@@ -3,7 +3,7 @@ def mapToValue(x, a, b, i, j):
     # and is to be mapped to a value between i and j.
 
     if b != a and i != j:
-	    return x/float(b-a)*float(j-i)
+        return x/float(b-a)*float(j-i)
 
 def convertToMotorSpeed(x, y):
     if y < 0:
