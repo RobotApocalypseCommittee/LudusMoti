@@ -34,11 +34,11 @@ leds = [ledControl.Led(i) for i in ledChannels]
 
 ### The Main Loop ###
 
-while done == False:
+while not done:
     try:
         for event in pygame.event.get(): # User did something
             if event.type == pygame.QUIT: # If user clicked close
-                done=True # Flag that we are done so we exit this loop
+                done = True # Flag that we are done so we exit this loop
 
         #Get new values from joystick
         joystick_data = joystick.update()

@@ -1,7 +1,7 @@
+"""Module for managing Joystick inputs"""
+
 import pygame
 import utils
-
-#Module for managing Joystick inputs
 
 #Various buttons and corresponding values
 button_map = {
@@ -11,8 +11,8 @@ button_map = {
 }
 
 class Joystick:
-    #Intialise as a pygame joystick object
-    def __init__(joystick_no=0):
+    """Wrapper around pygame joystick"""
+    def __init__(self, joystick_no=0):
         self.joystick_no = min(joystick_no, pygame.joystick.get_count())
 
         self.joystick = pygame.joystick.Joystick(self.joystick_no)
@@ -20,31 +20,31 @@ class Joystick:
 
         self.state = {}
 
-    #Get absolute values from the joystick, inverting if needed
-    def getJoyValue(self, i, invert):
+    def get_joy_value(self, i, invert):
+        """Get absolute values from the joystick, inverting if needed"""
         val = self.joystick.get_axis(i)
         if invert:
             return val * -1
         else:
             return val
 
-    #Convert absolute values into values for the motors using Utils
     def get_motor_vals(self):
+        """Convert absolute values into values for the motors using Utils"""
 
-        x = self.getJoyValue(0, 0)
-        y = self.getJoyValue(1, 1)
+        x = self.get_joy_value(0, 0)
+        y = self.get_joy_value(1, 1)
 
         val = utils.convertToMotorSpeed(x, y)
         return val
 
-    #Returns button value
     def get_button(self, n):
+        """Returns button value"""
 
         return self.joystick.get_button(n)
 
-    #Updates the Joystick every frame with any changes
     def update(self):
+        """Updates the Joystick every frame with any changes"""
         state = {}
-        for key in button_map.keys():
+        for key in button_map:
             state[key] = self.get_button(button_map[key])
         state["motor_vals"] = self.get_motor_vals()

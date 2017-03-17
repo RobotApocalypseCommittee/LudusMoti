@@ -9,33 +9,44 @@ class Led:
     def __init__(self, pin):
 
         self.pinNo = pin
-        
+
         #setup led as output
         GPIO.setup(self.pinNo, GPIO.OUT)
-        
+
         #set default states as off
         self.off()
-        
-    #Manually change led states
+
     def set_led(self, state):
+        """Manually change led states"""
         self.state = state
-        GPIO.output(self.pinNo, state)
+        self.update()
 
-    #Toggle Leds
     def toggle_led(self):
-        state = not self.state
-        GPIO.output(ledno, state)
+        """Toggle Leds"""
+        self.state = not self.state
+        self.update()
 
-    #Blink function; needs to implemented in main
     def blink(self):
-        if blinking:
-            self.toggle_led()
-        else:
-            self.blinking = True
+        """Blink function; needs to implemented in main"""
+        self.blinking = True
 
-    #Set all states to 0
     def off(self):
+        """Set all states to 0"""
         self.state = False
         self.blinking = False
-    
+        self.blink_count = 0
+        self.update()
+
+    def update(self):
+        """Updates LED state."""
+
+        if self.blinking:
+            self.blink_count += 1
+
+        if self.blink_count == 100:
+            self.state = not self.state
+            self.blink_count = 0
+
+        GPIO.output(self.pinNo, self.state)
+
     
