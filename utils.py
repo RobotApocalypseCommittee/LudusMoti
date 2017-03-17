@@ -1,3 +1,5 @@
+#Miscellaneous functions go here
+
 def mapToValue(x, a, b, i, j):
     # Here's a function that takes in the value x, which is between a and b,
     # and is to be mapped to a value between i and j.
@@ -5,6 +7,7 @@ def mapToValue(x, a, b, i, j):
     if b != a and i != j:
         return x/float(b-a)*float(j-i)
 
+#Function to convert absolute values into speeds for the motors
 def convertToMotorSpeed(x, y):
     if y < 0:
         d = 0
