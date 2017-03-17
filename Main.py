@@ -16,7 +16,9 @@ motorControl = motorControl.MotorController()
 
 joystick = joyInput.Joystick()
 
-leds = ledControl.LedDriver()
+ledChannels = [21, 26]
+
+leds = [ledControl.Led(i) for i in ledChannels]
 
 leftState = 0
 
@@ -44,12 +46,11 @@ while done == False:
         motorControl.set_led(0, ledleft)
         motorControl.set_led(1, ledright)
 
-        print ledleft
-        leds.set_led(21, ledleft)
+        print (ledleft)
+        leds[0].set_led(ledleft)
 
-        leds.set_led(26, ledright)
+        leds[1].set_led(ledright)
 
-        #GPIO.output(14, ledright)
 
 
         for i in range(2):
