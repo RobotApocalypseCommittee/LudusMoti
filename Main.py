@@ -50,20 +50,22 @@ while not done:
         ledright = joystick_data["ledright"]
 
         ledall = joystick_data["ledall"]
-        
+
         if ledall:
             ledleft = 1
             ledright = 1
+        
+        for event in joystick.get_events():
+            if event[0] == "flashall":
+                leds[0].blink()
+                leds[1].blink()
 
         #Set leds on the motorshield
         motorControl.set_led(0, ledleft)
         motorControl.set_led(1, ledright)
 
-        print (ledleft)
-
-        #Set pinout leds
+        # Set external LEDs.
         leds[0].set_led(ledleft)
-
         leds[1].set_led(ledright)
 
 
