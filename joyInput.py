@@ -8,11 +8,8 @@ button_map = {
     "ledall": 0,
     "ledleft": 4,
     "ledright": 5,
-<<<<<<< HEAD
     "ledblinkbetween": 3
-=======
     "flashall": 2
->>>>>>> origin/master
 }
 
 class Joystick:
