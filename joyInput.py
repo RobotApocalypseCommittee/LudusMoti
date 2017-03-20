@@ -8,7 +8,11 @@ button_map = {
     "ledall": 0,
     "ledleft": 4,
     "ledright": 5,
+<<<<<<< HEAD
     "ledblinkbetween": 3
+=======
+    "flashall": 2
+>>>>>>> origin/master
 }
 
 class Joystick:
@@ -20,6 +24,10 @@ class Joystick:
         self.joystick.init()
 
         self.state = {}
+        for key in button_map:
+            self.state[key] = False
+
+        self.events = []
 
     def get_joy_value(self, i, invert):
         """Get absolute values from the joystick, inverting if needed"""
@@ -49,3 +57,17 @@ class Joystick:
         for key in button_map:
             state[key] = self.get_button(button_map[key])
         state["motor_vals"] = self.get_motor_vals()
+
+        oldstate = self.state
+        self.state = state
+
+        for key in button_map:
+            if oldstate[key] and not self.state[key]:
+                self.events.append(key, "btnpress")
+        return self.state
+
+    def get_events(self):
+        """Return events"""
+        retval = self.events
+        self.events = []
+        return retval
