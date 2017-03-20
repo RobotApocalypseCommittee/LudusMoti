@@ -29,6 +29,7 @@ class Led:
     def blink(self):
         """Blink function; needs to implemented in main"""
         self.blinking = True
+        self.update()
 
     def off(self):
         """Set all states to 0"""

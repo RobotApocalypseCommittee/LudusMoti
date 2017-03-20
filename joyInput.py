@@ -7,7 +7,8 @@ import utils
 button_map = {
     "ledall": 0,
     "ledleft": 4,
-    "ledright": 5
+    "ledright": 5,
+    "ledblinkbetween": 3
 }
 
 class Joystick:

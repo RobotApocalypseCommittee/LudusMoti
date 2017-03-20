@@ -50,10 +50,15 @@ while not done:
         ledright = joystick_data["ledright"]
 
         ledall = joystick_data["ledall"]
+        ledblinkingbetween = joystick_data["ledblinkingbetween"]
         
         if ledall:
             ledleft = 1
             ledright = 1
+
+        if ledblinkingbetween:
+            for led in leds:
+                led.blink()
 
         #Set leds on the motorshield
         motorControl.set_led(0, ledleft)
@@ -65,7 +70,6 @@ while not done:
         leds[0].set_led(ledleft)
 
         leds[1].set_led(ledright)
-
 
         ## Drive the motors
         for i in range(2):
