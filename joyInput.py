@@ -5,11 +5,11 @@ import utils
 
 #Various buttons and corresponding values
 button_map = {
-    "ledall": 0,
+    "ledblinkspddown": 0,
     "ledleft": 4,
     "ledright": 5,
-    "ledblinkbetween": 3
-    "flashall": 2
+    "ledblinkon": 1,
+    "ledblinkspdup": 2
 }
 
 class Joystick:
@@ -60,11 +60,6 @@ class Joystick:
 
         for key in button_map:
             if oldstate[key] and not self.state[key]:
-                self.events.append(key, "btnpress")
-        return self.state
+                self.state["events"].append(key, "btnpress")
 
-    def get_events(self):
-        """Return events"""
-        retval = self.events
-        self.events = []
-        return retval
+        return self.state

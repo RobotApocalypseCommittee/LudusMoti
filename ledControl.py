@@ -38,7 +38,7 @@ class Led:
         self.blink_count = 0
         self.update()
 
-    def update(self):
+    def update(self, joystick):
         """Updates LED state."""
 
         if self.blinking:
@@ -49,5 +49,27 @@ class Led:
             self.blink_count = 0
 
         GPIO.output(self.pinNo, self.state)
+
+class LEDriver:
+    def __init__(self):
+        #Pin numbers for leds
+        #led_channels are [21, 26]
+        self.blinkyTimes = False
+        self.blinkspd = 10
+        self.leo = Led(21)
+        self.rob = Led(26)
+        #Initalise led object for all of them
+        self.leds = [Led(i) for i in led_channels]
+
+    def update(self, joystick_data):
+        for event in joystick_data["events"]:
+            if event[0] == "ledblinkon":
+                self.blinkyTimes = not self.blinkyTimes
+        if self.blinkyTimes:
+            counter = 0
+            self.leo.toggle_led
+            
+            
+
 
     

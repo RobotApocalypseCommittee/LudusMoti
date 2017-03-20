@@ -25,12 +25,7 @@ motorControl = motorControl.MotorController()
 #Initalise a new joystick
 joystick = joyInput.Joystick()
 
-#Pin numbers for leds
-ledChannels = [21, 26]
-
-#Initalise led object for all of them
-leds = [ledControl.Led(i) for i in ledChannels]
-
+ledDriver = ledControl.LEDriver()
 
 ### The Main Loop ###
 
@@ -46,36 +41,8 @@ while not done:
         #Assign them to generic variables
         val = joystick_data["motor_vals"]
 
-        ledleft = joystick_data["ledleft"]
-        ledright = joystick_data["ledright"]
-
-        ledall = joystick_data["ledall"]
-<<<<<<< HEAD
-        ledblinkingbetween = joystick_data["ledblinkingbetween"]
+        ledDriver.update(joystick_data)
         
-=======
-
->>>>>>> origin/master
-        if ledall:
-            ledleft = 1
-            ledright = 1
-        
-        for event in joystick.get_events():
-            if event[0] == "flashall":
-                leds[0].blink()
-                leds[1].blink()
-
-        if ledblinkingbetween:
-            for led in leds:
-                led.blink()
-
-        #Set leds on the motorshield
-        motorControl.set_led(0, ledleft)
-        motorControl.set_led(1, ledright)
-
-        # Set external LEDs.
-        leds[0].set_led(ledleft)
-        leds[1].set_led(ledright)
 
         ## Drive the motors
         for i in range(2):
