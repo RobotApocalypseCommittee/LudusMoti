@@ -90,3 +90,6 @@ ENV/
 
 # William stuff
 .vs
+
+# Joe stuff
+.vscode
