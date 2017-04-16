@@ -48,8 +48,8 @@ while not done:
         for i in range(2):
             motorControl.set_motor(i, val[2], val[i])
 
-        #Frames per second
-        clock.tick(100)
+        # Frames per second(more realistic)
+        clock.tick(50)
 
     #Detect for Ctrl+C on Pi to break Pygame loop
     except KeyboardInterrupt:
