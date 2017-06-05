@@ -7,6 +7,9 @@ class Neopixel:
         self.num_pixels = num_pixels
         self.clear()
 
+    def toggle_led(self):
+        self.ser.write(bytes([1]))       
+
     def _setpixel(self, pos, r, g, b):
         self.ser.write(bytes([2,pos,r,g,b]))
 
