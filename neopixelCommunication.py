@@ -37,9 +37,9 @@ class Neopixel:
         return (wheelpos * 3, 255 - wheelpos * 3, 0)
     
     def rainbow(self):
-        for j in range(256):
+        for j in range(256*5):
             for i in range(self.num_pixels):
-                x = self._wheelpos((i+j) & 255)
+                x = self._wheelpos(((i * 256 / strip.numPixels()) + j) & 255)
                 self.set_pixel(i,x[0],x[1],x[2])
             time.sleep(0.02)
     

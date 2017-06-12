@@ -5,7 +5,7 @@
 
 //Parameters neopixel strip(tested with a single neopixel).
 #define PIN            6
-#define NUMPIXELS      1
+#define NUMPIXELS      8
 
 bool led = false;
 
@@ -23,7 +23,7 @@ void setup() {
   pinMode(13, OUTPUT);
 
   // Setup strip(make sure to get          V THIS BIT V correct.
-  strip = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_RGB + NEO_KHZ800);
+  strip = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
   strip.begin();
 
   // Begin Serial
